@@ -518,7 +518,23 @@ var app = {
 
 	},
 	fnc_saveaddedsurvey : function(){
-	    	    
+	    var description = $("#up_img_desc").val();
+
+        $.ajax({
+            url : app.url+"InqueryInsert?conn_type=insert&memberid="+app.id+"&seq="+sequence+"&description="+description,
+            dataType : "json",
+            success : function(a, b, c) {
+                console.log("resimler yuklendi");
+               
+                $.mobile.changePage($('#anket'));
+            },
+            error : function(a, b, c) {
+                console.log("err a ", a);
+                console.log("err b ", b);
+                console.log("err c ", c);
+                console.log("err c ", c);
+            }
+        }); 
 	},
 	fnc_lookbook_init:function(){
 				
@@ -2086,12 +2102,15 @@ function capturePhoto(image_index) {
     if (image_index == 1) {
         up_img_1 = app.id +"-"+ sequence +"-"+ image_index;
         up_img_name = up_img_1 + ".jpg";
+        $("#up_img_1").prop('checked', 'true');
     }else if(image_index == 2){
         up_img_2 = app.id +"-"+ sequence +"-"+ image_index;
         up_img_name = up_img_2 + ".jpg";
+        $("#up_img_2").prop('checked', 'true');
     }else if(image_index == 3){
         up_img_3 = app.id +"-"+ sequence +"-"+ image_index;
         up_img_name = up_img_3 + ".jpg";
+        $("#up_img_3").prop('checked', 'true');
     };
     
     navigator.camera.getPicture(onCapturePhoto, onFail, {
