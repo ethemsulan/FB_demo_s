@@ -1276,18 +1276,37 @@ var app = {
                 listItems = $('#div_anket').find('ul');
                  
                     html ="<table style='width:100%'>";
-                    html += '<tr><td width="33%">Kimden</td>';
+                    //html += '<tr><td width="33%">Kimden</td>';
                     html += '<td width="33%">Konu</td>';
-                    html += '<td width="33%"> Nerede</td></tr>';
+                    //html += '<td width="33%"> Nerede</td></tr>';
                     html += '<td width="33%"> </td></tr>';
                    
                     html+="</table>";
                     listItems.append('<li id="prj_header_z">' + html + '</li>');
 
                     html ="<table style='width:100%'>";
-                    html += '<tr><td width="33%">'+ 'Selma Balcı'+ '</td>';
-                    html += '<td width="33%">' + 'elbise oylaması' + '</td>';
-                    html += '<td width="33%">' + 'GAP Kadıköy' + '</td>';
+                    //html += '<tr><td width="33%">'+ 'Selma Balcı'+ '</td>';
+                    
+                    //descritionu buraya koyacagiz
+                    $.ajax({
+                        url : app.url+"Inquery?conn_type=getInqueryList&memberid="+app.id,
+                        dataType : "json",
+                        success : function(a, b, c) {
+                            console.log("anket gönderiliyor 1");
+                             for (var i = 0; i < a.length; i++) {
+                                html += '<td width="33%">' + a[i].descriptions+ '</td>';
+                             }
+                        },
+                        error : function(a, b, c) {
+                            console.log("err a ", a);
+                            console.log("err b ", b);
+                            console.log("err c ", c);
+                            console.log("err c ", c);
+                        }
+                    }); 
+                    
+                  //end  descritionu buraya koyacagiz
+                    //html += '<td width="33%">' + 'GAP Kadıköy' + '</td>';
                     
                     if (app.id=="123456789")
                     {
