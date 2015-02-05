@@ -76,15 +76,21 @@
          <table>
              <tr>
                  <td>1. Resim</td>
-                 <td> <a href="#" onclick="capturePhoto()">Çek</a></td>
+                 <td> <a href="#" onclick="capturePhoto(1)">Çek</a></td>
              </tr>
              <tr>
                  <td>2. Resim</td>
-                 <td> <a href="#" onclick="capturePhoto()">Çek</a></td>
+                 <td> <a href="#" onclick="capturePhoto(2)">Çek</a></td>
              </tr>
              <tr>
                  <td>3. Resim</td>
-                 <td> <a href="#" onclick="capturePhoto()">Çek</a></td>
+                 <td> <a href="#" onclick="capturePhoto(3)">Çek</a></td>
+             </tr>
+             <tr>
+                 <td></td>
+                 <td>
+                     <input type="button" name="btn_add_survey" id="btn_add_survey" value="Kaydet" onclick="app.fnc_saveaddedsurvey()"/>
+                 </td>
              </tr>
          </table>
     </div>
@@ -709,7 +715,7 @@ puanlarım
 		      </div>               
     </div><!-- /header -->
     <div data-role="content">
-        <a href="#add_survey">Ekle</a>
+        <a href="#add_survey" onclick="getSeq()">Ekle</a>
         <br />
         <br />
         <br />

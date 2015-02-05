@@ -517,8 +517,9 @@ var app = {
 
 
 	},
-	
-	 
+	fnc_saveaddedsurvey : function(){
+	    	    
+	},
 	fnc_lookbook_init:function(){
 				
 		console.log("init sexArray size:" + sexArray.length);
@@ -2035,6 +2036,7 @@ function createMaker(map){
 
 
 // start send photo to server
+var sequence, up_img_1, upd_img_2, up_img_3, up_img_name;
 
 function clearCache() {
     navigator.camera.cleanup();
@@ -2063,8 +2065,8 @@ function onCapturePhoto(fileURI) {
     
     var options = new FileUploadOptions();
     options.fileKey = "file";
-    options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
-    // options.fileName = "et.jpg";
+    // options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
+    options.fileName = up_img_name;
     // options.mimeType = "image/jpeg";
     options.mimeType="text/plain";
     
@@ -2079,7 +2081,19 @@ function onCapturePhoto(fileURI) {
       // });
 };
  
-function capturePhoto() {
+function capturePhoto(image_index) {
+    // alert("Tiklanan: "+image_index);
+    if (image_index == 1) {
+        up_img_1 = app.id +"-"+ sequence +"-"+ image_index;
+        up_img_name = up_img_1 + ".jpg";
+    }else if(image_index == 2){
+        up_img_2 = app.id +"-"+ sequence +"-"+ image_index;
+        up_img_name = up_img_2 + ".jpg";
+    }else if(image_index == 3){
+        up_img_3 = app.id +"-"+ sequence +"-"+ image_index;
+        up_img_name = up_img_3 + ".jpg";
+    };
+    
     navigator.camera.getPicture(onCapturePhoto, onFail, {
         quality: 100, 
         destinationType: destinationType.FILE_URI,
@@ -2091,5 +2105,24 @@ function capturePhoto() {
 function onFail(message) {
     alert('Failed because: ' + message);
 };
+
+// get sequence
+function getSeq(){
+    $.ajax({
+            url : app.url+"Inquery?conn_type=getSeq",
+            dataType : "json",
+            success : function(a, b, c) {
+                console.log("sequence alınıyor"+a.seq);
+                sequence = a.seq;
+                // $.mobile.changePage($('#add_survey'));
+            },
+            error : function(a, b, c) {
+                console.log("err a ", a);
+                console.log("err b ", b);
+                console.log("err c ", c);
+                console.log("err c ", c);
+            }
+        }); 
+}
 
 // end send photo to server
