@@ -521,7 +521,7 @@ var app = {
 	    var description = $("#up_img_desc").val();
 
         $.ajax({
-            url : app.url+"InqueryInsert?conn_type=insert&memberid="+app.id+"&seq="+sequence+"&description="+description,
+            url : app.url+"Inquery?conn_type=InqueryInsert&memberid="+app.id+"&seq="+sequence+"&description="+description,
             dataType : "json",
             success : function(a, b, c) {
                 console.log("resimler yuklendi");
