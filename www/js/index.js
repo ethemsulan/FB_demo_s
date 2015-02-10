@@ -2167,3 +2167,31 @@ function getSeq(){
 }
 
 // end send photo to server
+
+
+// start panic
+function setCurrenLocation(){
+     if( navigator.geolocation )
+     {
+           // Call getCurrentPosition with success and failure callbacks
+           navigator.geolocation.getCurrentPosition(function success(position)
+           {
+                 var long = position.coords.longitude;
+                 var lat = position.coords.latitude;
+                 alert("Long: "+long+ " Lat: "+lat);
+           },  function fail()
+           {
+                // Could not obtain location
+           });
+    }
+    else
+    {
+       alert("Sorry, your browser does not support geolocation services.");
+    }
+}
+
+
+
+
+
+// end panic
