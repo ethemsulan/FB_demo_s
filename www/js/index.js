@@ -1285,9 +1285,10 @@ var app = {
                     listItems.append('<li id="prj_header_z">' + html + '</li>');
 
                     html ="<table style='width:100%'>";
-                    //html += '<tr><td width="33%">'+ 'Selma Balcı'+ '</td>';
+                    // html += '<tr><td width="33%">'+ 'Selma Balcı'+ '</td>'
                     
                     //descritionu buraya koyacagiz
+                    
                     $.ajax({
                         url : app.url+"Inquery?conn_type=getInqueryList&memberid="+app.id,
                         dataType : "json",
@@ -1321,7 +1322,9 @@ var app = {
                     listItems.append('<li id="g_camp_1453">' + html + '</li>');
                 
                 	$('#div_anket ul').listview();
-/*
+                	// $("#div_anket").listview("refresh");
+                	 
+                /*
                     $('#g_camp_1453').bind('tap',
                     function(event, ui) {
                     	console.log("click anket detay");
