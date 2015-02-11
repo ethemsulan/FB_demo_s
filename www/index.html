@@ -52,6 +52,13 @@
         </div> 
         <!--end login page-->
         
+
+
+
+
+
+
+
 <!--show panic directoion map page-->
 <div data-role="page" id="panic_direction_page">
     <div data-role="header" align="center">
@@ -64,7 +71,7 @@
                   <a href="#kampanyalar" onclick="app.fnc_Kampanyalar()">   <img src="img/menu_icons/5_Campaign.png" width="8%"> <img/></a>
                 <a href="#istatistik" data-ajax="false" onclick="app.fnc_Istatistik()"><img src="img/menu_icons/6_Statistic.png" width="8%"> <img/></a>
                 <a href="#katalog_ms" data-ajax="false"><img src="img/menu_icons/9_shop.png" width="8%"> <img/></a>
-                <a href="#panic" data-ajax="false" onclick="app.showList()"><img src="img/menu_icons/Panic.png" width="8%"> <img/></a>
+                <a href="#panic" data-ajax="false" onclick="opType()"><img src="img/menu_icons/Panic.png" width="8%"> <img/></a>
               </div>        
     </div><!-- /header -->
     
@@ -74,7 +81,6 @@
     </div> 
 
 </div><!-- /page -->
-
 <!--end panic directoion map page-->
 
 
@@ -97,11 +103,9 @@
               </div>        
     </div><!-- /header -->
     <div data-role="content">
-            <div id="div_panic_list">
-                
-            </div>
+            <div id="div_panic_list"></div>
             
-            <table id="report_panic">
+           <table id="report_panic">
                <tr>
                    <input type="text" name="panic_desc" id="panic_desc" />
                </tr>
