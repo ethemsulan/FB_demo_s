@@ -2305,7 +2305,7 @@ function fnc_panic_direction_map(){
               google.maps.event.addListener(marker, 'click', function() {
                 infowindow.open(map_direction, marker);
               });
-            }
+            };
 //      end current location add label and listener
         
 //         start direction
@@ -2344,6 +2344,6 @@ function fnc_panic_direction_map(){
         navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoFail, {
             enableHighAccuracy : true
         });
-    }
+};
    
 // end panic
