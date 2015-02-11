@@ -52,7 +52,31 @@
         </div> 
         <!--end login page-->
         
-        
+<!--show panic directoion map page-->
+<div data-role="page" id="panic_direction_page">
+    <div data-role="header" align="center">
+        <br/>
+              <div >
+                <a href="#barkod" data-ajax="false" onclick="app.fnc_Barkod()"><img src="img/menu_icons/1_Home.png" width="8%"> <img/></a>
+                <a href="#puanlarim" data-ajax="false"  onclick="app.fnc_Puanlarim()"><img src="img/menu_icons/2_Score.png" width="8%"> <img/></a>
+                  <a href="#mesajlar"  onclick="app.fnc_Mesajlar()">        <img src="img/menu_icons/3_Message.png" width="8%"> <img/> </a>
+                <a href="#profil" data-ajax="false" onclick="app.fnc_Profil()"><img src="img/menu_icons/4_Profile.png" width="8%"> <img/></a>
+                  <a href="#kampanyalar" onclick="app.fnc_Kampanyalar()">   <img src="img/menu_icons/5_Campaign.png" width="8%"> <img/></a>
+                <a href="#istatistik" data-ajax="false" onclick="app.fnc_Istatistik()"><img src="img/menu_icons/6_Statistic.png" width="8%"> <img/></a>
+                <a href="#katalog_ms" data-ajax="false"><img src="img/menu_icons/9_shop.png" width="8%"> <img/></a>
+                <a href="#panic" data-ajax="false" onclick="app.showList()"><img src="img/menu_icons/Panic.png" width="8%"> <img/></a>
+              </div>        
+    </div><!-- /header -->
+    
+    <div data-role="content" id="map_cont_panic" style="padding:0;position:absolute;top:90px;right:0px;bottom:0px;left:0px;">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2qBI9GSPtX0zrcLHLhPtc519cEPyGotw&sensor=false"> </script>
+        <div id="panic_map_direction"  style="width:100%; height: 100%;" > </div>
+    </div> 
+
+</div><!-- /page -->
+
+<!--end panic directoion map page-->
+
 
 <!--start panic page-->
 <div data-role="page" id="panic">
@@ -68,14 +92,23 @@
                 <a href="#anket" data-ajax="false" onclick="app.fnc_Anket()"><img id="img_inq9" src="img/menu_icons/8_anket_.png" width="8%"> <img/></a>                
                 <a href="#katalog_ms" data-ajax="false"><img src="img/menu_icons/9_shop.png" width="8%"> <img/></a>                
                 <a href="#map_branch_page" data-ajax="false" ><img src="img/menu_icons/7_Map.png" width="8%"> <img/></a>
-                 <a href="#panic" data-ajax="false" ><img src="img/menu_icons/Panic.png" width="8%"> <img/></a>
+                 <a href="#panic" data-ajax="false" onclick="opType()"><img src="img/menu_icons/Panic.png" width="8%"> <img/></a>
                 
               </div>        
     </div><!-- /header -->
     <div data-role="content">
-       <div style="position: fixed">
-            <a href="#" data-ajax="false" onclick="setCurrenLocation()"><img src="img/menu_icons/SPanic.png"/></a>
-       </div>
+            <div id="div_panic_list">
+                
+            </div>
+            
+            <table id="report_panic">
+               <tr>
+                   <input type="text" name="panic_desc" id="panic_desc" />
+               </tr>
+               <tr>
+                    <a href="#" data-ajax="false" onclick="setCurrenLocation()"><img src="img/menu_icons/SPanic.png"/></a>
+               </tr>
+           </table>
     </div>
 </div>
 <!--end panic page--> 
@@ -453,7 +486,7 @@
 				<a href="#anket" data-ajax="false" onclick="app.fnc_Anket()"><img id="img_inq" src="img/menu_icons/8_anket.png" width="8%"> <img/></a>                
                 <a href="#katalog_ms" data-ajax="false"><img src="img/menu_icons/9_shop.png" width="8%"> <img/></a>
                 <a href="#map_branch_page" data-ajax="false" ><img src="img/menu_icons/7_Map.png" width="8%"> <img/></a>
-                <a href="#panic" data-ajax="false" ><img src="img/menu_icons/Panic.png" width="8%"> <img/></a>
+                <a href="#panic" data-ajax="false" onclick="opType()"><img src="img/menu_icons/Panic.png" width="8%"> <img/></a>
 		      </div>        
     </div><!-- /header -->
 <div data-role="content">

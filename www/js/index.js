@@ -2170,6 +2170,18 @@ function getSeq(){
 
 
 // start panic
+var is_doctor = false;
+var panic_lat_end = "28.72082";
+var panic_lng_end = "77.107241";
+function opType(){
+    showList();
+    if (is_doctor) {
+         $("#div_panic_list").hide();
+    }else{
+          $("#report_panic").hide();
+    }
+}
+
 function setCurrenLocation(){
      if( navigator.geolocation )
      {
@@ -2178,7 +2190,24 @@ function setCurrenLocation(){
            {
                  var long = position.coords.longitude;
                  var lat = position.coords.latitude;
-                 alert("Long: "+long+ " Lat: "+lat);
+                 var description = $("#panic_desc").val();
+
+                  $.ajax({
+                    url : app.url+"GetMember?conn_type=insertPanicPosition&member_id="+app.id+"&longtitute="+long+"&langtitute="+lat+"&panic_description="+description,
+                    dataType : "json",
+                    success : function(a, b, c) {
+                       
+                       // $.mobile.changePage($('#panic'));
+                    },
+                    error : function(a, b, c) {
+                        console.log("err a ", a);
+                        console.log("err b ", b);
+                        console.log("err c ", c);
+                        console.log("err c ", c);
+                    }
+                }); 
+    
+                 alert("En kısa zamanda sizinle iletişime geçilecek. Lütfen sakin olmaya çalışınız!");
            },  function fail()
            {
                 // Could not obtain location
@@ -2191,7 +2220,129 @@ function setCurrenLocation(){
 }
 
 
+function showList(){
+    $("#div_panic_list ul").page('destroy').page();
+    var l_content='';
+    $.ajax({
+        url : app.url+"GetMember?conn_type=getAllPanicPosition&memberid="+app.id,
+        dataType : "json",
+        success : function(a, b, c) {
+            for (var i=0; i < a.length; i++) {
+               l_content += '<li><a href="#panic_direction_page">'+a[i].description +" "+ a[i].longtitute +" "+ a[i].langtitute+'</a></li>';
+            };
+            $('#div_panic_list').append('<ul data-role="listview">'+l_content+'</ul>'); 
+            
+        },
+        error : function(a, b, c) {
+            console.log("err a ", a);
+            console.log("err b ", b);
+            console.log("err c ", c);
+            console.log("err c ", c);
+        }
+    }); 
+}
+
+$('#div_panic_list li').live('click', function() {
+    var panic_loc = $(this).text().trim();
+    var panic_list = panic_loc.split(" ");
+    panic_lng_end = panic_list[1];
+    panic_lat_end = panic_list[2];
+    
+    // alert("Long: "+panic_lng_end +" Lat: "+panic_lat_end);
+    
+     fnc_panic_direction_map();
+});
 
 
+function fnc_panic_direction_map(){
+         $.mobile.changePage($('#panic_direction_page'));
+         
+        var onGeoSuccess = function(position) {
+            console.log(position);
+        
+            var panic_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            
+            google.maps.visualRefresh = true;
 
+            var mapOptions = {
+                zoom : 13,
+                center : panic_location,
+                rotateControl : false,
+                streetViewControl : false,
+                mapTypeControl : false,
+                draggable : true,
+                mapTypeId : google.maps.MapTypeId.ROADMAP
+            };
+            var map_name = "panic_map_direction";
+            var map_direction = new google.maps.Map(document.getElementById(map_name), mapOptions);
+            //     current location manuel change default image
+            var image = {
+                url : 'img/aaa.gif',
+                size : new google.maps.Size(38, 38),
+                //size : new google.maps.Size(10, 10),
+                origin : new google.maps.Point(0, 0),
+                // The anchor for this image is the base of the flagpole at 0,32.
+                anchor : new google.maps.Point(19, 19)
+                //anchor : new google.maps.Point(5, 5)
+            };
+            var currentLocationMarker = new google.maps.Marker({
+                position : panic_location,
+                map : map_direction,
+                bounds : false,
+                title : 'Buradasınız',
+                icon : image,
+                //shape : shape,
+                optimized : false
+                //animation : google.maps.Animation.BOUNCE
+            });
+//      current location add label and listener
+            setPanicMessage(currentLocationMarker);
+            function setPanicMessage(marker) {
+              var message = "<div>Buradasınız</div>";
+              var infowindow = new google.maps.InfoWindow({
+                content: message
+              });
+            
+              google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map_direction, marker);
+              });
+            }
+//      end current location add label and listener
+        
+//         start direction
+
+            var start = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            
+            var end = new google.maps.LatLng(panic_lat_end,panic_lng_end);
+            
+            var directionsService = new google.maps.DirectionsService();
+            var directionsDisplay = new google.maps.DirectionsRenderer(); 
+
+            directionsDisplay.setMap(map_direction); 
+            var request = { 
+                origin: start, 
+                destination: end, 
+                travelMode: google.maps.DirectionsTravelMode.DRIVING 
+            };
+            directionsService.route(request, function(response, status){ 
+                if (status == google.maps.DirectionsStatus.OK) 
+                { 
+                    directionsDisplay.setDirections(response); 
+                } 
+            }); 
+            
+            
+//          end direction
+        };
+        
+
+        
+        var onGeoFail = function(error) {
+            console.log(error);
+        };
+        
+        navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoFail, {
+            enableHighAccuracy : true
+        });
+};
 // end panic
