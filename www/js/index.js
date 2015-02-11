@@ -839,8 +839,8 @@ var app = {
         app.check_campains();
     },
     fnc_direction_map :  function(){
-         $.mobile.changePage($('#direction_page'));
-         
+         // $.mobile.changePage($('#direction_page'));
+          $.mobile.changePage($('#panic_direction_page'));
         var onGeoSuccess = function(position) {
             console.log(position);
         
@@ -857,7 +857,9 @@ var app = {
                 draggable : true,
                 mapTypeId : google.maps.MapTypeId.ROADMAP
             };
-            var map_name = "map_direction";
+            // var map_name = "map_direction";
+            var map_name = "panic_map_direction";
+            
             var map_direction = new google.maps.Map(document.getElementById(map_name), mapOptions);
             //     current location manuel change default image
             var image = {
@@ -2171,8 +2173,6 @@ function getSeq(){
 
 // start panic
 var is_doctor = false;
-var panic_lat_end = "28.72082";
-var panic_lng_end = "77.107241";
 function opType(){
     showList();
     if (is_doctor) {
@@ -2245,105 +2245,9 @@ function showList(){
 $('#div_panic_list li').live('click', function() {
     var panic_loc = $(this).text().trim();
     var panic_list = panic_loc.split(" ");
-    panic_lng_end = panic_list[1];
-    panic_lat_end = panic_list[2];
-    
-    // alert("Long: "+panic_lng_end +" Lat: "+panic_lat_end);
-    
-     fnc_panic_direction_map();
+     // lng_end = panic_list[1];
+    // lat_end = panic_list[2];
+    app.fnc_direction_map();
 });
 
-function fnc_panic_direction_map(){
-         $.mobile.changePage($('#panic_direction_page'));
-         
-        var onGeoSuccess = function(position) {
-            console.log(position);
-        
-            var location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            
-            google.maps.visualRefresh = true;
-
-            var mapOptions = {
-                zoom : 13,
-                center : location,
-                rotateControl : false,
-                streetViewControl : false,
-                mapTypeControl : false,
-                draggable : true,
-                mapTypeId : google.maps.MapTypeId.ROADMAP
-            };
-            var map_name = "panic_map_direction";
-            var map_direction = new google.maps.Map(document.getElementById(map_name), mapOptions);
-            //     current location manuel change default image
-            var image = {
-                url : 'img/aaa.gif',
-                size : new google.maps.Size(38, 38),
-                //size : new google.maps.Size(10, 10),
-                origin : new google.maps.Point(0, 0),
-                // The anchor for this image is the base of the flagpole at 0,32.
-                anchor : new google.maps.Point(19, 19)
-                //anchor : new google.maps.Point(5, 5)
-            };
-            var currentLocationMarker = new google.maps.Marker({
-                position : location,
-                map : map_direction,
-                bounds : false,
-                title : 'Buradasınız',
-                icon : image,
-                //shape : shape,
-                optimized : false
-                //animation : google.maps.Animation.BOUNCE
-            });
-//      current location add label and listener
-            setCurrentLocationMessage(currentLocationMarker);
-            function setCurrentLocationMessage(marker) {
-              var message = "<div>Buradasınız</div>";
-              var infowindow = new google.maps.InfoWindow({
-                content: message
-              });
-            
-              google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map_direction, marker);
-              });
-            };
-//      end current location add label and listener
-        
-//         start direction
-
-            var start = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-            
-            var end = new google.maps.LatLng(lat_end,lng_end);
-            
-            var directionsService = new google.maps.DirectionsService();
-            var directionsDisplay = new google.maps.DirectionsRenderer(); 
-
-            directionsDisplay.setMap(map_direction); 
-            var request = { 
-                origin: start, 
-                destination: end, 
-                travelMode: google.maps.DirectionsTravelMode.DRIVING 
-            };
-            directionsService.route(request, function(response, status){ 
-                if (status == google.maps.DirectionsStatus.OK) 
-                { 
-                    directionsDisplay.setDirections(response); 
-                } 
-            }); 
-            
-            
-//          end direction
-        };
-        
-
-        
-        var onGeoFail = function(error) {
-            console.log(error);
-        };
-        
-        navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoFail, {
-            enableHighAccuracy : true
-        });
-};
-   
 // end panic
