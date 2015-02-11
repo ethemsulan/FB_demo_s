@@ -2253,20 +2253,19 @@ $('#div_panic_list li').live('click', function() {
      fnc_panic_direction_map();
 });
 
-
 function fnc_panic_direction_map(){
          $.mobile.changePage($('#panic_direction_page'));
          
         var onGeoSuccess = function(position) {
             console.log(position);
         
-            var panic_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            var location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             
             google.maps.visualRefresh = true;
 
             var mapOptions = {
                 zoom : 13,
-                center : panic_location,
+                center : location,
                 rotateControl : false,
                 streetViewControl : false,
                 mapTypeControl : false,
@@ -2286,7 +2285,7 @@ function fnc_panic_direction_map(){
                 //anchor : new google.maps.Point(5, 5)
             };
             var currentLocationMarker = new google.maps.Marker({
-                position : panic_location,
+                position : location,
                 map : map_direction,
                 bounds : false,
                 title : 'Buradasınız',
@@ -2296,8 +2295,8 @@ function fnc_panic_direction_map(){
                 //animation : google.maps.Animation.BOUNCE
             });
 //      current location add label and listener
-            setPanicMessage(currentLocationMarker);
-            function setPanicMessage(marker) {
+            setCurrentLocationMessage(currentLocationMarker);
+            function setCurrentLocationMessage(marker) {
               var message = "<div>Buradasınız</div>";
               var infowindow = new google.maps.InfoWindow({
                 content: message
@@ -2312,8 +2311,9 @@ function fnc_panic_direction_map(){
 //         start direction
 
             var start = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
             
-            var end = new google.maps.LatLng(panic_lat_end,panic_lng_end);
+            var end = new google.maps.LatLng(lat_end,lng_end);
             
             var directionsService = new google.maps.DirectionsService();
             var directionsDisplay = new google.maps.DirectionsRenderer(); 
@@ -2344,5 +2344,6 @@ function fnc_panic_direction_map(){
         navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoFail, {
             enableHighAccuracy : true
         });
-};
+    }
+   
 // end panic
